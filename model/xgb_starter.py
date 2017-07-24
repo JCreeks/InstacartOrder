@@ -324,8 +324,8 @@ train.loc[:, 'reordered'] = train.reordered.fillna(0)
 X_test = data.loc[data.eval_set == "test",:]
 
 # subsample 让training时间更短
-X_train, X_val, y_train, y_val = train_test_split(train.drop('reordered', axis=1), train.reordered,
-                                                    test_size=1, random_state=42)
+#X_train, X_val, y_train, y_val = train_test_split(train.drop('reordered', axis=1), train.reordered,
+#                                                    test_size=1, random_state=42)
 d_train = xgboost.DMatrix(X_train, y_train)
 xgb_params = {
     "objective"         : "reg:logistic"
@@ -341,19 +341,16 @@ xgb_params = {
     ,"silent"           :1
 }
 
-watchlist= [(d_train, "train")]
-bst = xgboost.train(params=xgb_params, dtrain=d_train, num_boost_round=80, evals=watchlist, verbose_eval=10)
+#watchlist= [(d_train, "train")]
+#bst = xgboost.train(params=xgb_params, dtrain=d_train, num_boost_round=80, evals=watchlist, verbose_eval=10)
 
+SEED = 10
+model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
+model.train(train.drop('reordered', axis=1), train.reordered)
 
-# In[ ]:
-
-#xgboost.plot_importance(bst)
-
-
-# In[ ]:
-
-d_test = xgboost.DMatrix(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1))
-X_test.loc[:,'reordered'] = (bst.predict(d_test) > 0.21).astype(int)
+#d_test = xgboost.DMatrix(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1))
+y_predict = model.predict(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'])
+X_test.loc[:,'reordered'] = (bst.predict(y_predict) > 0.21).astype(int)
 X_test.loc[:, 'product_id'] = X_test.product_id.astype(str)
 submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1], 
                                                group_columns_list=['order_id'],
@@ -361,7 +358,7 @@ submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1],
                                                methods_list=[lambda x: ' '.join(set(x))], keep_only_stats=True)
 submit.columns = sample_submission.columns.tolist()
 submit_final = sample_submission[['order_id']].merge(submit, how='left').fillna('None')
-submit_final.to_csv("../result/jul23_2.csv", index=False)
+submit_final.to_csv("../result/jul24_2.csv", index=False)
 
 
 # In[ ]:
