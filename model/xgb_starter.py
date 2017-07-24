@@ -1,24 +1,13 @@
 
-# coding: utf-8
+module_path = os.path.abspath(os.path.join('..'))
+sys.path.append(module_path)
 
-# This script is translate from @Fabienvs's [R code](https://www.kaggle.com/fabienvs/instacart-xgboost-starter-lb-0-3791), I think it may help kagglers who do not use R.  
-# I really appreciate @Fabienvs's great work, to be honest, I have no idea about how to handling this kind of problem(this is the first time I encounter recommendation problem- -)  
-# here we go!! 
-# below exist some very useful functions I write by my own, you can download from my [github repo](https://github.com/NickYi1990/Kaggle_Buddy.git)
-# sorry for adding some Chinese in it, it would not affect the code
-# ## The dataset is too big, you should run it on your desktop!
-
-# In[17]:
-
-# This Python 3 environment comes with many helpful analytics libraries installed
-# It is defined by the kaggle/python docker image: https://github.com/kaggle/docker-python
-# For example, here's several helpful packages to load in 
 import gc
 import time
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 from sklearn.model_selection import train_test_split
-
+from model_stack.model_wrapper import XgbWrapper, SklearnWrapper, GridCVWrapper
 import matplotlib.pyplot as plt
 
 #get_ipython().magic(u'matplotlib inline')
@@ -358,7 +347,7 @@ bst = xgboost.train(params=xgb_params, dtrain=d_train, num_boost_round=80, evals
 
 # In[ ]:
 
-xgboost.plot_importance(bst)
+#xgboost.plot_importance(bst)
 
 
 # In[ ]:
