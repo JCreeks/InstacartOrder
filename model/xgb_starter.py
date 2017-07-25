@@ -1,3 +1,9 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#coding=utf-8
+
+import os
+import sys
 
 module_path = os.path.abspath(os.path.join('..'))
 sys.path.append(module_path)
@@ -349,7 +355,7 @@ model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
 model.train(train.drop('reordered', axis=1), train.reordered)
 
 #d_test = xgboost.DMatrix(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1))
-y_predict = model.predict(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'])
+y_predict = model.predict(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id']))
 X_test.loc[:,'reordered'] = (bst.predict(y_predict) > 0.21).astype(int)
 X_test.loc[:, 'product_id'] = X_test.product_id.astype(str)
 submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1], 
