@@ -355,7 +355,7 @@ model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
 model.train(train.drop('reordered', axis=1), train.reordered)
 
 #d_test = xgboost.DMatrix(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1))
-y_predict = model.predict(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id']))
+y_predict = model.predict(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1))
 #X_test.loc[:,'reordered'] = (bst.predict(d_test) > 0.21).astype(int)
 X_test.loc[:,'reordered'] = (y_predict > 0.21).astype(int)
 X_test.loc[:, 'product_id'] = X_test.product_id.astype(str)
