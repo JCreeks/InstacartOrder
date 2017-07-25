@@ -356,7 +356,8 @@ model.train(train.drop('reordered', axis=1), train.reordered)
 
 #d_test = xgboost.DMatrix(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1))
 y_predict = model.predict(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id']))
-X_test.loc[:,'reordered'] = (bst.predict(y_predict) > 0.21).astype(int)
+#X_test.loc[:,'reordered'] = (bst.predict(d_test) > 0.21).astype(int)
+X_test.loc[:,'reordered'] = (y_predict > 0.21).astype(int)
 X_test.loc[:, 'product_id'] = X_test.product_id.astype(str)
 submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1], 
                                                group_columns_list=['order_id'],
