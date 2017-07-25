@@ -1,0 +1,55 @@
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/sklearn/grid_search.py:43: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. This module will be removed in 0.20.
+  DeprecationWarning)
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/groupby.py:4036: FutureWarning: using a dict with renaming is deprecated and will be removed in a future version
+  return super(DataFrameGroupBy, self).aggregate(arg, *args, **kwargs)
+xgb_starter.py:327: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  train.drop(['eval_set', 'user_id', 'product_id', 'order_id'], axis=1, inplace=True)
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/indexing.py:517: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+  self.obj[item] = s
+aisles.csv
+departments.csv
+order_products__prior.csv
+order_products__train.csv
+orders.csv
+products.csv
+sample_submission.csv
+zip
+
+add stats features begin ......
+add stats features end ......
+time lapsing 117.066355944 s 
+
+add stats features begin ......
+add stats features end ......
+time lapsing 0.346786022186 s 
+
+add stats features begin ......
+add stats features end ......
+time lapsing 889.189888954 s 
+
+add stats features begin ......
+add stats features end ......
+time lapsing 17.0332670212 s 
+
+[01:41:28] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+[01:41:46] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+[01:42:04] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+[01:42:23] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+[08:23:20] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+Traceback (most recent call last):
+  File "xgb_starter.py", line 358, in <module>
+    y_predict = model.predict(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id']))
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/generic.py", line 2161, in drop
+    new_axis = axis.drop(labels, errors=errors)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/indexes/base.py", line 3624, in drop
+    labels[mask])
+ValueError: labels ['eval_set' 'user_id' 'order_id' 'reordered' 'product_id'] not contained in axis
