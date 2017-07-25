@@ -203,7 +203,7 @@ priors, train, orders, products, aisles, departments, sample_submission = load_d
 priors_orders_detail = orders.merge(right=priors, how='inner', on='order_id')
 
 # create new variables
-# _user_buy_product_times: 用户是第几次购买该商品
+## _user_buy_product_times: 用户是第几次购买该商品
 priors_orders_detail.loc[:,'_user_buy_product_times'] = priors_orders_detail.groupby(['user_id', 'product_id']).cumcount() + 1
 # _prod_tot_cnts: 该商品被购买的总次数,表明被喜欢的程度
 # _reorder_tot_cnts_of_this_prod: 这件商品被再次购买的总次数
