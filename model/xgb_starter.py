@@ -332,7 +332,7 @@ X_test = data.loc[data.eval_set == "test",:]
 # subsample 让training时间更短
 #X_train, X_val, y_train, y_val = train_test_split(train.drop('reordered', axis=1), train.reordered,
 #                                                    test_size=1, random_state=42)
-d_train = xgboost.DMatrix(X_train, y_train)
+#d_train = xgboost.DMatrix(X_train, y_train)
 xgb_params = {
     "objective"         : "reg:logistic"
     ,"eval_metric"      : "logloss"
