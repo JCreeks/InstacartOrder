@@ -118,6 +118,7 @@ def main():
                                                    group_columns_list=['order_id'],
                                                    target_columns_list= ['product_id'],
                                                    methods_list=[lambda x: ' '.join(set(x))], keep_only_stats=True)
+    sample_submission = pd.read_csv("../input/sample_submission.csv")
     submit.columns = sample_submission.columns.tolist()
     submit_final = sample_submission[['order_id']].merge(submit, how='left').fillna('None')
     submit_final.to_csv("../result/jul26_1.csv", index=False)
