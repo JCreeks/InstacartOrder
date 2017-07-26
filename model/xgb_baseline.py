@@ -94,7 +94,7 @@ def main():
 
     xgb_params = {
     "objective"         : "reg:logistic"
-    ,"eval_metric"      : "logloss"
+    ,"eval_metric"      : "logloss" #"error"
     ,"eta"              : 0.1
     ,"max_depth"        : 6
     ,"min_child_weight" :10
