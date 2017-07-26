@@ -28,11 +28,12 @@ def main():
     train = train[~pd.isnull(train.reordered)]
     print 'train:', train.shape, ', test:', test.shape
     y_train = train['reordered']
-    X_train = train.drop('reordered', axis=1)
-    X_test = test
+    X_train = train.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1)
+    X_test = test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1)
     
     X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.8, random_state=42)
     
+    id_test = test.product_id
     del train, test
 
     xgb_params = {
@@ -55,7 +56,7 @@ def main():
     
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.21).astype(int)
-    X_test.loc[:, 'product_id'] = X_test.product_id.astype(str)
+    X_test.loc[:, 'product_id'] = id_test.astype(str)
     submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1], 
                                                    group_columns_list=['order_id'],
                                                    target_columns_list= ['product_id'],
