@@ -19,6 +19,7 @@ import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 from sklearn.model_selection import train_test_split
 from model_stack.model_wrapper import XgbWrapper, SklearnWrapper, GridCVWrapper
+from utils.time_util import tick_tock
 
 def ka_add_groupby_features_1_vs_n(df, group_columns_list, agg_dict, only_new_feature=True):
     with tick_tock("add stats features"):
@@ -78,8 +79,8 @@ def main():
     print 'load datas...'
     train, test = data_util.load_dataset()
     
-    train.loc[:, 'reordered'] = train.reordered.fillna(0)
-    #train = train[~pd.isnull(train.reordered)]
+    #train.loc[:, 'reordered'] = train.reordered.fillna(0)
+    train = train[~pd.isnull(train.reordered)]
     print 'train:', train.shape, ', test:', test.shape
     y_train = train['reordered']
     X_train = train.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1)
