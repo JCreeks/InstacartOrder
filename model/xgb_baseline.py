@@ -20,6 +20,60 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 from sklearn.model_selection import train_test_split
 from model_stack.model_wrapper import XgbWrapper, SklearnWrapper, GridCVWrapper
 
+def ka_add_groupby_features_1_vs_n(df, group_columns_list, agg_dict, only_new_feature=True):
+    with tick_tock("add stats features"):
+        try:
+            if type(group_columns_list) == list:
+                pass
+            else:
+                raise TypeError("group_columns_list" + "should be a list")
+        except TypeError as e:
+            print(e)
+            raise
+
+        df_new = df.copy()
+        grouped = df_new.groupby(group_columns_list)
+
+        the_stats = grouped.agg(agg_dict)
+        the_stats.columns = the_stats.columns.droplevel(0)
+        the_stats.reset_index(inplace=True)
+        if only_new_feature:
+            df_new = the_stats
+        else:
+            df_new = pd.merge(left=df_new, right=the_stats, on=group_columns_list, how='left')
+
+    return df_new
+
+def ka_add_groupby_features_n_vs_1(df, group_columns_list, target_columns_list, methods_list, keep_only_stats=True, verbose=1):
+    with tick_tock("add stats features", verbose):
+        dicts = {"group_columns_list": group_columns_list , "target_columns_list": target_columns_list, "methods_list" :methods_list}
+
+        for k, v in dicts.items():
+            try:
+                if type(v) == list:
+                    pass
+                else:
+                    raise TypeError(k + "should be a list")
+            except TypeError as e:
+                print(e)
+                raise
+
+        grouped_name = ''.join(group_columns_list)
+        target_name = ''.join(target_columns_list)
+        combine_name = [[grouped_name] + [method_name] + [target_name] for method_name in methods_list]
+
+        df_new = df.copy()
+        grouped = df_new.groupby(group_columns_list)
+
+        the_stats = grouped[target_name].agg(methods_list).reset_index()
+        the_stats.columns = [grouped_name] +                             ['_%s_%s_by_%s' % (grouped_name, method_name, target_name)                              for (grouped_name, method_name, target_name) in combine_name]
+        if keep_only_stats:
+            return the_stats
+        else:
+            df_new = pd.merge(left=df_new, right=the_stats, on=group_columns_list, how='left')
+        return df_new
+
+
 def main():
     print 'load datas...'
     train, test = data_util.load_dataset()
