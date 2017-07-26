@@ -1,10 +1,6 @@
 #!/usr/local/miniconda2/bin/python
 # _*_ coding: utf-8 _*_
 
-"""
-@author: MarkLiu
-@time  : 17-7-2 下午8:55
-"""
 import os
 import sys
 
