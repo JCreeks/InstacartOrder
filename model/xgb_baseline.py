@@ -121,7 +121,8 @@ def main():
     sample_submission = pd.read_csv("../input/sample_submission.csv")
     submit.columns = sample_submission.columns.tolist()
     submit_final = sample_submission[['order_id']].merge(submit, how='left').fillna('None')
-    submit_final.to_csv("../result/jul26_2.csv", index=False)
+    #submit_final.to_csv("../result/jul26_2.csv", index=False)
+    submit_finalto_csv(Configure.submission_path, index=False)
 
 
 if __name__ == '__main__':
