@@ -42,7 +42,7 @@ def main():
     }
 
     SEED = 10
-    model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
+    model = XgbWrapper(seed=SEED, params=xgb_params, cv_train=True, cv_fold=4)
     model.train(X_train, y_train)
     
     y_predict = model.predict(X_test)
