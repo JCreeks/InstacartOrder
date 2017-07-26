@@ -30,6 +30,8 @@ def main():
     X_train = train.drop('reordered', axis=1)
     X_test = test
     
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.9, random_state=42)
+    
     del train, test
 
     xgb_params = {
