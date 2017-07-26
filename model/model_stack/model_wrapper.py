@@ -64,9 +64,12 @@ class XgbWrapper(BaseWrapper):
         self.score = 0
         self.cv_fold = cv_fold
 
-    def train(self, x, y, plotImp=False):
-        best_nrounds, cv_mean, cv_std = self.cv_train(x, y, nfold=self.cv_fold)
-        self.nrounds = best_nrounds
+    def train(self, x, y, plotImp=False, cv_train=True, nrounds=80):
+        self.nrounds = nrounds
+        if (cv_train):
+            best_nrounds, cv_mean, cv_std = self.cv_train(x, y, nfold=self.cv_fold)
+            self.nrounds = best_nrounds
+            print("CV best_nrounds: {}".format(best_nrounds))
         #print('Ensemble-CV: {0}+{1}'.format(cv_mean, cv_std))
         dtrain = xgb.DMatrix(x, label=y)
         self.gbdt = xgb.train(self.param, dtrain, self.nrounds)
@@ -84,7 +87,7 @@ class XgbWrapper(BaseWrapper):
         cv_std = res.iloc[-1, 1]
         self.score = cv_mean
         #print("score={}".format(self.score ))
-        self.score = 1 - self.score**2/np.var(y)
+        #self.score = 1 - self.score**2/np.var(y)
         return best_nrounds, cv_mean, cv_std
 
     def predict(self, x):
