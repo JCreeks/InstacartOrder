@@ -94,7 +94,7 @@ def main():
 
     xgb_params = {
     "objective"         : "reg:logistic"
-    ,"eval_metric"      : "logloss"
+    ,"eval_metric"      : "logloss" #"error"
     ,"eta"              : 0.1
     ,"max_depth"        : 6
     ,"min_child_weight" :10
@@ -108,7 +108,7 @@ def main():
     
     SEED = 10
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
-    model.train(X_train, y_train, cv_train=True)
+    model.train(X_train, y_train, cv_train=True, nrounds=80)
     
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.21).astype(int)
