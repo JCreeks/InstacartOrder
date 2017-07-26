@@ -23,9 +23,10 @@ from model_stack.model_wrapper import XgbWrapper, SklearnWrapper, GridCVWrapper
 def main():
     print 'load datas...'
     train, test = data_util.load_dataset()
-    print 'train:', train.shape, ', test:', test.shape
     
     #train.loc[:, 'reordered'] = train.reordered.fillna(0)
+    train = train[~pd.isnull(train.reordered)]
+    print 'train:', train.shape, ', test:', test.shape
     y_train = train['reordered']
     X_train = train.drop('reordered', axis=1)
     X_test = test
