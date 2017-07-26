@@ -125,7 +125,7 @@ def ka_add_groupby_features_1_vs_n(df, group_columns_list, agg_dict, only_new_fe
             if type(group_columns_list) == list:
                 pass
             else:
-                raise TypeError(k + "should be a list")
+                raise TypeError("group_columns_list" + "should be a list")
         except TypeError as e:
             print(e)
             raise
