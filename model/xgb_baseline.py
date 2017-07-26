@@ -25,12 +25,12 @@ def main():
     train, test = data_util.load_dataset()
     print 'train:', train.shape, ', test:', test.shape
     
-    train.loc[:, 'reordered'] = train.reordered.fillna(0)
+    #train.loc[:, 'reordered'] = train.reordered.fillna(0)
     y_train = train['reordered']
     X_train = train.drop('reordered', axis=1)
     X_test = test
     
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.9, random_state=42)
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.8, random_state=42)
     
     del train, test
 
