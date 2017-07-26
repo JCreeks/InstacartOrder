@@ -49,3 +49,29 @@ add stats features begin ......
 add stats features end ......
 time lapsing 1.81849908829 s 
 
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/sklearn/grid_search.py:43: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. This module will be removed in 0.20.
+  DeprecationWarning)
+load datas...
+train: (8474661, 23) , test: (4833292, 22)
+CV best_nrounds: 999
+Traceback (most recent call last):
+  File "xgb_baseline.py", line 63, in <module>
+    main()
+  File "xgb_baseline.py", line 52, in main
+    X_test.loc[:, 'product_id'] = X_test.product_id.astype(str)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/generic.py", line 3081, in __getattr__
+    return object.__getattribute__(self, name)
+AttributeError: 'DataFrame' object has no attribute 'product_id'
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/sklearn/grid_search.py:43: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. This module will be removed in 0.20.
+  DeprecationWarning)
+load datas...
+train: (8474661, 27) , test: (4833292, 27)
+CV best_nrounds: 621
+add stats features begin ......
+add stats features end ......
+time lapsing 2.02131700516 s 
+
