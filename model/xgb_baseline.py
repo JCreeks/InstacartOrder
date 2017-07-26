@@ -88,7 +88,8 @@ def main():
     
     X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.8, random_state=42)
     
-    id_test = test.product_id
+    product_id_test = test.product_id
+    order_id_test = test.order_id
     del train, test
 
     xgb_params = {
@@ -111,7 +112,8 @@ def main():
     
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.21).astype(int)
-    X_test.loc[:, 'product_id'] = id_test.astype(str)
+    X_test.loc[:, 'product_id'] = product_id_test.astype(str)
+    X_test.loc[:, 'order_id'] = order_id_test.astype(str)
     submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1], 
                                                    group_columns_list=['order_id'],
                                                    target_columns_list= ['product_id'],
