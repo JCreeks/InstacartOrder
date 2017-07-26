@@ -229,9 +229,6 @@ prd['_prod_reorder_ratio'] = prd._prod_reorder_tot_cnts / prd._prod_tot_cnts
 prd['_prod_reorder_times'] = 1 + prd._prod_reorder_tot_cnts / prd._prod_buy_first_time_total_cnt
 
 
-# In[6]:
-
-prd.head()
 
 
 # # User Part
@@ -267,11 +264,6 @@ us = orders[orders.eval_set != "prior"][['user_id', 'order_id', 'eval_set', 'day
 us.rename(index=str, columns={'days_since_prior_order': 'time_since_last_order'}, inplace=True)
 
 users = users.merge(us, how='inner')
-
-
-# In[8]:
-
-users.head()
 
 
 # # Database Part
@@ -310,11 +302,6 @@ data = data.merge(train[['user_id', 'product_id', 'reordered']], on=['user_id', 
 # release Memory
 del priors_orders_detail, orders
 gc.collect()
-
-
-# In[10]:
-
-data.head()
 
 
 # # Create Train / Test
