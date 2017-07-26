@@ -183,11 +183,11 @@ def main():
 
         # # Create Train / Test
         train = data.loc[data.eval_set == "train",:]
-        train.drop(['eval_set', 'user_id', 'product_id', 'order_id'], axis=1, inplace=True)
+        #train.drop(['eval_set', 'user_id', 'product_id', 'order_id'], axis=1, inplace=True)
         #train.loc[:, 'reordered'] = train.reordered.fillna(0)
 
         test = data.loc[data.eval_set == "test",:]
-        test.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1, inplace=True)
+        #test.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1, inplace=True)
         groupby_features_train = train
         groupby_features_test = test
 
