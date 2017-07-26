@@ -35,14 +35,19 @@ def main():
     del train, test
 
     xgb_params = {
-        'eta': 0.005,
-        'max_depth': 4,
-        'subsample': 0.93,
-        'objective': 'reg:linear',
-        'eval_metric': 'rmse',
-        'silent': 1
+    "objective"         : "reg:logistic"
+    ,"eval_metric"      : "logloss"
+    ,"eta"              : 0.1
+    ,"max_depth"        : 6
+    ,"min_child_weight" :10
+    ,"gamma"            :0.70
+    ,"subsample"        :0.76
+    ,"colsample_bytree" :0.95
+    ,"alpha"            :2e-05
+    ,"lambda"           :10
+    ,"silent"           :1
     }
-
+    
     SEED = 10
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
     model.train(X_train, y_train, cv_train=True)
