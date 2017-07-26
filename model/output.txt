@@ -26,30 +26,26 @@ zip
 
 add stats features begin ......
 add stats features end ......
-time lapsing 117.066355944 s 
+time lapsing 117.371787071 s 
 
 add stats features begin ......
 add stats features end ......
-time lapsing 0.346786022186 s 
+time lapsing 0.369739055634 s 
 
 add stats features begin ......
 add stats features end ......
-time lapsing 889.189888954 s 
+time lapsing 913.468400002 s 
 
 add stats features begin ......
 add stats features end ......
-time lapsing 17.0332670212 s 
+time lapsing 18.480880022 s 
 
-[01:41:28] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
-[01:41:46] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
-[01:42:04] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
-[01:42:23] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
-[08:23:20] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
-Traceback (most recent call last):
-  File "xgb_starter.py", line 358, in <module>
-    y_predict = model.predict(X_test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id']))
-  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/generic.py", line 2161, in drop
-    new_axis = axis.drop(labels, errors=errors)
-  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/indexes/base.py", line 3624, in drop
-    labels[mask])
-ValueError: labels ['eval_set' 'user_id' 'order_id' 'reordered' 'product_id'] not contained in axis
+[15:41:09] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+[15:41:28] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+[15:41:47] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+[15:42:05] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+[22:32:55] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+add stats features begin ......
+add stats features end ......
+time lapsing 1.81849908829 s 
+

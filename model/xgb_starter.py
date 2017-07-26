@@ -365,7 +365,7 @@ submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1],
                                                methods_list=[lambda x: ' '.join(set(x))], keep_only_stats=True)
 submit.columns = sample_submission.columns.tolist()
 submit_final = sample_submission[['order_id']].merge(submit, how='left').fillna('None')
-submit_final.to_csv("../result/jul24_2.csv", index=False)
+submit_final.to_csv("../result/jul25_1.csv", index=False)
 
 
 # In[ ]:
