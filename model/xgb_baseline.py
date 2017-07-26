@@ -111,7 +111,7 @@ def main():
     model.train(X_train, y_train, cv_train=False, nrounds=621)
     
     y_predict = model.predict(X_test)
-    X_test.loc[:,'reordered'] = (y_predict > 0.21).astype(int)
+    X_test.loc[:,'reordered'] = (y_predict > 0.5).astype(int)
     X_test.loc[:, 'product_id'] = product_id_test.astype(str)
     X_test.loc[:, 'order_id'] = order_id_test.astype(str)
     submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1], 
