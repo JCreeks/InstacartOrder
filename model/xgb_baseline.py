@@ -108,7 +108,7 @@ def main():
     
     SEED = 10
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
-    model.train(X_train, y_train, cv_train=True, nrounds=80)
+    model.train(X_train, y_train, cv_train=False, nrounds=621)
     
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.21).astype(int)
@@ -121,7 +121,7 @@ def main():
     sample_submission = pd.read_csv("../input/sample_submission.csv")
     submit.columns = sample_submission.columns.tolist()
     submit_final = sample_submission[['order_id']].merge(submit, how='left').fillna('None')
-    submit_final.to_csv("../result/jul26_1.csv", index=False)
+    submit_final.to_csv("../result/jul26_2.csv", index=False)
 
 
 if __name__ == '__main__':
