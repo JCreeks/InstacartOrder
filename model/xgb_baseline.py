@@ -94,7 +94,7 @@ def main():
 
     xgb_params = {
     "objective"         : "reg:logistic"
-    ,"eval_metric"      : "logloss" #"error"
+    ,"eval_metric"      : "error"
     ,"eta"              : 0.1
     ,"max_depth"        : 6
     ,"min_child_weight" :10
@@ -108,7 +108,7 @@ def main():
     
     SEED = 10
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
-    model.train(X_train, y_train, cv_train=False, nrounds=621)
+    model.train(X_train, y_train, cv_train=True, nrounds=621)
     
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.5).astype(int)
@@ -122,7 +122,8 @@ def main():
     submit.columns = sample_submission.columns.tolist()
     submit_final = sample_submission[['order_id']].merge(submit, how='left').fillna('None')
     #submit_final.to_csv("../result/jul26_2.csv", index=False)
-    submit_finalto_csv(Configure.submission_path, index=False)
+    score = model.getScore()
+    submit_finalto_csv(Configure.submission_path+str(score)+'.csv', index=False)
 
 
 if __name__ == '__main__':
