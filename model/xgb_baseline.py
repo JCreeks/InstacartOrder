@@ -123,7 +123,7 @@ def main():
     submit_final = sample_submission[['order_id']].merge(submit, how='left').fillna('None')
     #submit_final.to_csv("../result/jul26_2.csv", index=False)
     score = model.getScore()
-    submit_finalto_csv(Configure.submission_path+str(score)+'.csv', index=False)
+    submit_final.to_csv(Configure.submission_path+str(score)+'.csv', index=False)
 
 
 if __name__ == '__main__':
