@@ -16,7 +16,7 @@
 # sorry for adding some Chinese in it, it would not affect the code
 # ## The dataset is too big, you should run it on your desktop!
 
-# In[1]:
+from functools import partial
 
 # This Python 3 environment comes with many helpful analytics libraries installed
 # It is defined by the kaggle/python docker image: https://github.com/kaggle/docker-python
