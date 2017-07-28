@@ -316,10 +316,10 @@ except:
     # del train, prd, users
     # gc.collect()
     # release Memory
-    del priors_orders_detail, orders
-    gc.collect()
+    #del priors_orders_detail, orders
+    #gc.collect()
 
-    data.head()
+    #data.head()
     
     data.to_pickle(path_data+'kernel38-data.pkl')
 
@@ -364,7 +364,12 @@ except:
     df_train_gt.to_csv(path_data+'train.csv')
 
 
-# In[7]:
+# release Memory
+del train, prd, users
+gc.collect()
+# release Memory
+del priors_orders_detail, orders
+gc.collect()
 
 def compare_results(df_gt, df_preds):
     
