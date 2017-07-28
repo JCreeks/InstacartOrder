@@ -333,6 +333,16 @@ try:
 except:
     train_gtl = []
 
+    op_train = pd.read_csv('../input/order_products__train.csv', engine='c', 
+                       dtype={'order_id': np.int32, 'product_id': np.int32, 
+                              'add_to_cart_order': np.int16, 'reordered': np.int8})
+
+    train_details = pd.merge(
+                left=op_train,
+                 right=orders, 
+                 how='left', 
+                 on='order_id'
+                ).apply(partial(pd.to_numeric, errors='ignore', downcast='integer'))
     for uid, subset in train_details.groupby('user_id'):
         subset1 = subset[subset.reordered == 1]
         oid = subset.order_id.values[0]
