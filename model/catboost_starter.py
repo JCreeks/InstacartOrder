@@ -313,11 +313,13 @@ except:
     data = data.merge(train[['user_id', 'product_id', 'reordered']], on=['user_id', 'product_id'], how='left')
 
     # release Memory
-    # del train, prd, users
+    # del train, users
     # gc.collect()
     # release Memory
     #del priors_orders_detail, orders
     #gc.collect()
+    del prd
+    gc.collect()
 
     #data.head()
     
@@ -365,7 +367,7 @@ except:
 
 
 # release Memory
-del train, prd, users
+del train, users
 gc.collect()
 # release Memory
 del priors_orders_detail, orders
