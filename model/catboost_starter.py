@@ -219,7 +219,7 @@ priors, train, orders, products, aisles, departments, sample_submission = load_d
 # In[5]:
 
 try:
-    data = pd.read_pickle('kernel38-data.pkl')
+    data = pd.read_pickle(path_data+'kernel38-data.pkl')
 except:
 
     # Product part
@@ -321,7 +321,7 @@ except:
 
     data.head()
     
-    data.to_pickle('kernel38-data.pkl')
+    data.to_pickle(path_data+'kernel38-data.pkl')
 
 
 # ## Validation code
@@ -329,7 +329,7 @@ except:
 # In[6]:
 
 try:
-    df_train_gt = pd.read_csv('train.csv', index_col='order_id')
+    df_train_gt = pd.read_csv(path_data+'train.csv', index_col='order_id')
 except:
     train_gtl = []
 
@@ -351,7 +351,7 @@ except:
     df_train_gt.set_index('order_id', inplace=True)
     df_train_gt.sort_index(inplace=True)
     
-    df_train_gt.to_csv('train.csv')
+    df_train_gt.to_csv(path_data+'train.csv')
 
 
 # In[7]:
@@ -543,5 +543,5 @@ len(df_test), len(df_testpreds)
 # combine empty output df with predictions
 df_test.loc[df_testpreds.index, 'products'] = df_testpreds.product_id
 df_test.sort_index(inplace=True)
-df_test.to_csv('preds_catboost.csv')
+df_test.to_csv('../result/'+'preds_catboost.csv')
 
