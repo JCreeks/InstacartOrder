@@ -465,7 +465,7 @@ for fold in range(4):
     cb.append(catboost_cv(X_train, y_train, X_val, y_val, features_to_use))
     rawpreds = cb[-1].predict_proba(X_val[features_to_use].values)
 
-    lim = .202
+    lim = .5#.202
     val_out = val_index.copy()
 
     val_out.loc[:,'reordered'] = (rawpreds[:,1] > lim).astype(int)
@@ -496,66 +496,63 @@ df_cv = pd.concat(df_cvfolds)
 print(compare_results(df_train_gt, df_cv))
 
 
-# In[42]:
 
-### now run model with 100% of train set for submission
-
-
-# In[18]:
-
-cb_full = catboost.CatBoostClassifier(iterations=100, 
-    thread_count=8, 
-    verbose=True,
-    random_seed=42,
-    learning_rate=0.05,
-    depth=8,
-    fold_permutation_block_size=64,
-    calc_feature_importance=True,
-    leaf_estimation_method='Gradient')
-
-cb_full.fit(X=train[features_to_use].values, 
-        y=train.reordered.values, 
-        cat_features=[train[features_to_use].columns.get_loc('aisle_id')], 
-        verbose=True,
-        #plot=True
-       )
+# ### now run model with 100% of train set for submission
 
 
-# ### Prepare submission
+# cb_full = catboost.CatBoostClassifier(iterations=100, 
+#     thread_count=8, 
+#     verbose=True,
+#     random_seed=42,
+#     learning_rate=0.05,
+#     depth=8,
+#     fold_permutation_block_size=64,
+#     calc_feature_importance=True,
+#     leaf_estimation_method='Gradient')
 
-# In[20]:
-
-testpreds = X_test[['user_id', 'product_id', 'order_id']].copy()
-testpreds['reordered'] = (cb_full.predict_proba(X_test[features_to_use].values)[:,1] > .202).astype(int)
-testpreds.product_id = testpreds.product_id.astype(str)
-
-
-# In[30]:
-
-g = testpreds[testpreds.reordered == 1].groupby('order_id', sort=False)
-df_testpreds = g[['product_id']].agg(lambda x: ' '.join(set(x)))
-
-df_testpreds.head()
-
-
-# In[34]:
-
-# complete (but empty) test df
-df_test = pd.DataFrame(index=X_test.order_id.unique())
-df_test.index.name = 'order_id'
-df_test['products'] = ['None'] * len(df_test)
+# cb_full.fit(X=train[features_to_use].values, 
+#         y=train.reordered.values, 
+#         cat_features=[train[features_to_use].columns.get_loc('aisle_id')], 
+#         verbose=True,
+#         #plot=True
+#        )
 
 
-# In[35]:
+# # ### Prepare submission
 
-# yup, there are ~3345 order_id's with no orders
-len(df_test), len(df_testpreds)
+# # In[20]:
+
+# testpreds = X_test[['user_id', 'product_id', 'order_id']].copy()
+# testpreds['reordered'] = (cb_full.predict_proba(X_test[features_to_use].values)[:,1] > .202).astype(int)
+# testpreds.product_id = testpreds.product_id.astype(str)
 
 
-# In[37]:
+# # In[30]:
 
-# combine empty output df with predictions
-df_test.loc[df_testpreds.index, 'products'] = df_testpreds.product_id
-df_test.sort_index(inplace=True)
-df_test.to_csv('../result/'+'preds_catboost.csv')
+# g = testpreds[testpreds.reordered == 1].groupby('order_id', sort=False)
+# df_testpreds = g[['product_id']].agg(lambda x: ' '.join(set(x)))
+
+# df_testpreds.head()
+
+
+# # In[34]:
+
+# # complete (but empty) test df
+# df_test = pd.DataFrame(index=X_test.order_id.unique())
+# df_test.index.name = 'order_id'
+# df_test['products'] = ['None'] * len(df_test)
+
+
+# # In[35]:
+
+# # yup, there are ~3345 order_id's with no orders
+# len(df_test), len(df_testpreds)
+
+
+# # In[37]:
+
+# # combine empty output df with predictions
+# df_test.loc[df_testpreds.index, 'products'] = df_testpreds.product_id
+# df_test.sort_index(inplace=True)
+# df_test.to_csv('../result/'+'preds_catboost.csv')
 
