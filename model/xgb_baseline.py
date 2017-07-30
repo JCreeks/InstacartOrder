@@ -107,7 +107,7 @@ def main():
     ,"silent"           :1
     }
     
-    SEED = 10
+    SEED = 100
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
     model.train(X_train, y_train, cv_train=False, nrounds=527)
     
