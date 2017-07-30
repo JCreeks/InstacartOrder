@@ -116,7 +116,7 @@ def main():
     
     SEED = 10
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
-    model.cv_train(X_train, y_train, num_boost_round=2000, nfold=5, early_stopping_rounds=20, metrics = F1)
+    model.cv_train(X_train, y_train, num_boost_round=2000, nfold=5, early_stopping_rounds=20, metrics = mean_F_score)
 
     print(model.getScore())
 
