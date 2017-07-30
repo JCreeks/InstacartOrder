@@ -11,6 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 module_path = os.path.abspath(os.path.join('..'))
 sys.path.append(module_path)
+import warnings
+warnings.filterwarnings('ignore')
 
 import xgboost as xgb
 from abc import ABCMeta, abstractmethod
