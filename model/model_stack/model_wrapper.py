@@ -77,10 +77,10 @@ class XgbWrapper(BaseWrapper):
             fig, ax = plt.subplots(1, 1, figsize=(8, 13))
             xgb.plot_importance(self.gbdt, max_num_features=50, height=0.5, ax=ax)
 
-    def cv_train(self, x, y, num_boost_round=2000, nfold=5, early_stopping_rounds=20):
+    def cv_train(self, x, y, num_boost_round=2000, nfold=5, early_stopping_rounds=20,  metrics=()):
         dtrain = xgb.DMatrix(x, label=y)
         res = xgb.cv(self.param, dtrain, num_boost_round=num_boost_round, nfold=nfold,
-                     early_stopping_rounds=early_stopping_rounds, verbose_eval=None, show_stdv=True)
+                     early_stopping_rounds=early_stopping_rounds, verbose_eval=None, show_stdv=True,  metrics=metrics)
 
         best_nrounds = res.shape[0] - 1
         cv_mean = res.iloc[-1, 0]
