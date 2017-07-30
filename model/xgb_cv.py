@@ -112,19 +112,19 @@ def DeepCV(df_train_gt, train, model, n_folds = 4):
         train_subset = train[train.user_id % 4 != fold]
         valid_subset = train[train.user_id % 4 == fold]
 
-        X_train = train_subset.drop('reordered', axis=1)
+        X_train = train_subset.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1)
         y_train = train_subset.reordered
 
         X_val = valid_subset.drop('reordered', axis=1)
         y_val = valid_subset.reordered
         model.train(X_train, y_train, cv_train=False, nrounds=80)
 
-        val_index = X_val[['user_id', 'product_id', 'order_id']]
+        val_out = X_val[['user_id', 'product_id', 'order_id']]
 
         lim = .202
-        val_out = val_index.copy()
-
-        val_out.loc[:,'reordered'] = (rawpreds[:,1] > lim).astype(int)
+        
+        y_predict = model.predict(X_val.drop(['eval_set', 'user_id', 'product_id', 'order_id'], axis=1))
+        val_out.loc[:,'reordered'] = (y_predict > lim).astype(int)
         val_out.loc[:, 'product_id'] = val_out.product_id.astype(str)
         presubmit = ka_add_groupby_features_n_vs_1(val_out[val_out.reordered == 1], 
                                                        group_columns_list=['order_id'],
@@ -151,27 +151,29 @@ def DeepCV(df_train_gt, train, model, n_folds = 4):
         #train_scores.append(train_score)
         val_scores.append(val_score)
 
-    print '\naverage train r2 score = {}, average validate r2 score = {}'.format(
-        #sum(train_scores) / len(train_scores),
+    print '\n average validate score = {}'.format(
         sum(val_scores) / len(val_scores))
 
 
 def main():
     print 'load datas...'
     train, test = data_util.load_dataset()
+    train = train.sample(frac=.5)
     
     train.loc[:, 'reordered'] = train.reordered.fillna(0)
     #train = train[~pd.isnull(train.reordered)]
     print 'train:', train.shape, ', test:', test.shape
-    y_train = train['reordered']
-    X_train = train.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1)
-    X_test = test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1)
+    del test
+
+    # y_train = train['reordered']
+    # X_train = train.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1)
+    # X_test = test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1)
     
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.007, random_state=42)
+    # X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.007, random_state=42)
     
-    product_id_test = test.product_id
-    order_id_test = test.order_id
-    del train, test, X_val, y_val
+    # product_id_test = test.product_id
+    # order_id_test = test.order_id
+    # del train, test, X_val, y_val
 
     path_data = "../input/"
     df_train_gt = pd.read_csv(path_data+'train.csv', index_col='order_id')
@@ -192,11 +194,11 @@ def main():
     
     SEED = 10
     #model = XGBRegressor(**xgb_params)
-    # model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
+    model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
     # # model.cv_train(X_train, y_train, num_boost_round=2000, nfold=5, early_stopping_rounds=20)
 
     # #print(model.getScore())
-    # DeepCV(X_train, y_train, model, metric = mean_F_score, n_folds = 4)
+    DeepCV(df_train_gt, train, model, n_folds = 4)
 
 
 if __name__ == '__main__':
