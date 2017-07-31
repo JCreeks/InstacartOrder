@@ -95,7 +95,7 @@ def main():
 
     xgb_params = {
     "objective"         : "reg:logistic"
-    ,"eval_metric"      : "auc"
+    ,"eval_metric"      : "logloss"#"auc"
     ,"eta"              : 0.1
     ,"max_depth"        : 6
     ,"min_child_weight" :10
@@ -114,7 +114,7 @@ def main():
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.202).astype(int)
     X_test.loc[:, 'product_id'] = product_id_test.astype(str)
-    X_test.loc[:, 'order_id'] = order_id_test.astype(str)
+    X_test.loc[:, 'order_id'] = order_id_test
     submit = ka_add_groupby_features_n_vs_1(X_test[X_test.reordered == 1], 
                                                    group_columns_list=['order_id'],
                                                    target_columns_list= ['product_id'],
