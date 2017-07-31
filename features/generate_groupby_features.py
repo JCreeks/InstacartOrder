@@ -7,6 +7,7 @@ import sys
 module_path = os.path.abspath(os.path.join('..'))
 sys.path.append(module_path)
 
+from sklearn.preprocessing import LabelEncoder
 import cPickle
 import pandas as pd
 import numpy as np
@@ -72,7 +73,11 @@ def ka_add_groupby_features_n_vs_1(df, group_columns_list, target_columns_list, 
             df_new = pd.merge(left=df_new, right=the_stats, on=group_columns_list, how='left')
         return df_new
 
-
+def transform_categorical_data(data, categorical_list):                   
+    for f in categorical_list:
+        encoder = LabelEncoder()
+        encoder.fit(list(data[f])) 
+        data[f] = encoder.transform(data[f].ravel())
 
 
 def main():
@@ -179,6 +184,7 @@ def main():
         train = train.merge(right=orders[['order_id', 'user_id']], how='left', on='order_id')
         data = data.merge(train[['user_id', 'product_id', 'reordered']], on=['user_id', 'product_id'], how='left')
         data = pd.merge(data, products[['product_id', 'aisle_id', 'department_id']], how='left', on='product_id')
+        transform_categorical_data(data, ['aisle_id', 'department_id'])
 
         # release Memory
         # del train, prd, users
