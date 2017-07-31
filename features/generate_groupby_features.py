@@ -19,6 +19,7 @@ warnings.filterwarnings('ignore')
 from utils import data_util
 from conf.configure import Configure
 from utils.time_util import tick_tock
+from utils.catgorize_util import transform_categorical_data
 
 def ka_add_groupby_features_1_vs_n(df, group_columns_list, agg_dict, only_new_feature=True):
     with tick_tock("add stats features"):
@@ -73,11 +74,11 @@ def ka_add_groupby_features_n_vs_1(df, group_columns_list, target_columns_list, 
             df_new = pd.merge(left=df_new, right=the_stats, on=group_columns_list, how='left')
         return df_new
 
-def transform_categorical_data(data, categorical_list):                   
-    for f in categorical_list:
-        encoder = LabelEncoder()
-        encoder.fit(list(data[f])) 
-        data[f] = encoder.transform(data[f].ravel())
+# def transform_categorical_data(data, categorical_list):                   
+#     for f in categorical_list:
+#         encoder = LabelEncoder()
+#         encoder.fit(list(data[f])) 
+#         data[f] = encoder.transform(data[f].ravel())
 
 
 def main():
