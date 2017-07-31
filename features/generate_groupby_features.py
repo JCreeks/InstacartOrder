@@ -178,7 +178,7 @@ def main():
         # add user_id to train set
         train = train.merge(right=orders[['order_id', 'user_id']], how='left', on='order_id')
         data = data.merge(train[['user_id', 'product_id', 'reordered']], on=['user_id', 'product_id'], how='left')
-        data = pd.merge(data, products[['products_id', 'aisles_id', 'department_id']], how='left', on='products_id')
+        data = pd.merge(data, products[['product_id', 'aisle_id', 'department_id']], how='left', on='product_id')
 
         # release Memory
         # del train, prd, users
