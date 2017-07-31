@@ -178,6 +178,7 @@ def main():
         # add user_id to train set
         train = train.merge(right=orders[['order_id', 'user_id']], how='left', on='order_id')
         data = data.merge(train[['user_id', 'product_id', 'reordered']], on=['user_id', 'product_id'], how='left')
+        data = pd.merge(data, products[['products_id', 'aisles_id', 'department_id']], how='left', on='products_id')
 
         # release Memory
         # del train, prd, users
@@ -214,8 +215,8 @@ def main():
 
         test = data.loc[data.eval_set == "test",:]
         #test.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1, inplace=True)
-        groupby_features_train = train
-        groupby_features_test = test
+        #groupby_features_train = train
+        #groupby_features_test = test
 
         # with open(Configure.groupby_features_train_path, "wb") as f:
         #     cPickle.dump(groupby_features_train, f, -1)
