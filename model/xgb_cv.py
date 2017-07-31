@@ -158,7 +158,7 @@ def DeepCV(df_train_gt, train, model, n_folds = 4):
 def main():
     print 'load datas...'
     train, test = data_util.load_dataset()
-    train = train.sample(frac=.5)
+    train = train.sample(frac=1)
     
     train.loc[:, 'reordered'] = train.reordered.fillna(0)
     #train = train[~pd.isnull(train.reordered)]
