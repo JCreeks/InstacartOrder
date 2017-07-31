@@ -13,7 +13,7 @@ import sys
 module_path = os.path.abspath(os.path.join('..'))
 sys.path.append(module_path)
 
-cmd = 'rm ../input/*_dataset.pkl'
+cmd = 'rm ../input/*.pkl'
 os.system(cmd)
 
 # cmd = 'python train_test_preprocess.py'
