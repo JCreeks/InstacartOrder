@@ -96,10 +96,10 @@ def main():
     xgb_params = {
     "objective"         : "reg:logistic"
     ,"eval_metric"      : "logloss"#"auc"
-    ,"eta"              : 0.1
+    ,"eta"              : .0917#0.1
     ,"max_depth"        : 6
     ,"min_child_weight" :10
-    ,"gamma"            :0.70
+    ,"gamma"            :0#0.70
     ,"subsample"        :0.76
     ,"colsample_bytree" :0.95
     ,"alpha"            :2e-05
@@ -110,7 +110,7 @@ def main():
     
     SEED = 100
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
-    model.train(X_train, y_train, cv_train=True, nrounds=80)
+    model.train(X_train, y_train, cv_train=False, nrounds=80)
     
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.202).astype(int)
