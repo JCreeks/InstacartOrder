@@ -105,6 +105,7 @@ def main():
     ,"alpha"            :2e-05
     ,"lambda"           :10
     ,"silent"           :1
+    ,"nthread"          :-1
     }
     
     SEED = 100
