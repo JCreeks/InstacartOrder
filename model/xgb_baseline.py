@@ -110,7 +110,7 @@ def main():
     
     SEED = 100
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
-    model.train(X_train, y_train, cv_train=False, nrounds=80)
+    model.train(X_train, y_train, cv_train=False, nrounds=90)
     
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.202).astype(int)
