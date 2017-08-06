@@ -222,3 +222,25 @@ add stats features begin ......
 add stats features end ......
 time lapsing 1.77648997307 s 
 
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+load datas...
+Traceback (most recent call last):
+  File "xgb_cv.py", line 205, in <module>
+    main()
+  File "xgb_cv.py", line 160, in main
+    train, test = data_util.load_dataset()
+  File "/home/ubuntu/nbs/Instacart/utils/data_util.py", line 25, in load_dataset
+    train = cPickle.load(f)
+  File "/home/ubuntu/anaconda2/lib/python2.7/site-packages/pandas/core/indexes/base.py", line 87, in _new_Index
+    def _new_Index(cls, d):
+KeyboardInterrupt: (None, <function _new_Index at 0x7f64ac9c4050>, (<class 'pandas.core.indexes.base.Index'>, {'data': array(['eval_set'], dtype=object), 'name': None}))
+/home/ubuntu/anaconda2/lib/python2.7/site-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+load datas...
+train: (8474661, 30) , test: (4833292, 30)
+[20:30:17] Tree method is automatically selected to be 'approx' for faster speed. to use old behavior(exact greedy algorithm on single machine), set tree_method to 'exact'
+add stats features begin ......
+add stats features end ......
+time lapsing 1.89197802544 s 
+
