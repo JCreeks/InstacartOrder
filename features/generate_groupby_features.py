@@ -83,7 +83,7 @@ def ka_add_groupby_features_n_vs_1(df, group_columns_list, target_columns_list, 
 
 def main():
     print 'load datas...'
-    priors, train, orders, products, aisles, departments, sample_submission = data_util.load_data()
+    priors, train, orders, products, aisles, departments, sample_submission, order_streaks = data_util.load_data()
 
     groupby_features_train = pd.DataFrame()
     groupby_features_test = pd.DataFrame()
@@ -186,13 +186,15 @@ def main():
         data = data.merge(train[['user_id', 'product_id', 'reordered']], on=['user_id', 'product_id'], how='left')
         data = pd.merge(data, products[['product_id', 'aisle_id', 'department_id']], how='left', on='product_id')
         transform_categorical_data(data, ['aisle_id', 'department_id'])
+        data = data.merge(order_streaks[['user_id', 'product_id', 'order_streak']], on=['user_id', 'product_id'], how='left')
+
 
         # release Memory
         # del train, prd, users
         # gc.collect()
         # release Memory
         #del priors_orders_detail
-        del orders
+        del orders, order_streaks
         gc.collect()
 
         starting_size = sys.getsizeof(data)

@@ -91,5 +91,6 @@ def load_data(path_data = '../input/'):
     aisles = pd.read_csv(path_data + "aisles.csv")
     departments = pd.read_csv(path_data + "departments.csv")
     sample_submission = pd.read_csv(path_data + "sample_submission.csv")
+    order_streaks = pd.read_csv(path_data + "order_streaks.csv")
     
-    return priors, train, orders, products, aisles, departments, sample_submission
+    return priors, train, orders, products, aisles, departments, sample_submission, order_streaks
