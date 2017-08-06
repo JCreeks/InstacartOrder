@@ -86,8 +86,8 @@ def main():
     X_train = train.drop(['eval_set', 'user_id', 'product_id', 'order_id', 'reordered'], axis=1)
     X_test = test.drop(['eval_set', 'user_id', 'order_id', 'reordered', 'product_id'], axis=1)
     
-    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.7, random_state=42)    
-    del X_val, y_val
+   # X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=.7, random_state=42)    
+   # del X_val, y_val
 
     product_id_test = test.product_id
     order_id_test = test.order_id
@@ -110,7 +110,7 @@ def main():
     
     SEED = 100
     model = XgbWrapper(seed=SEED, params=xgb_params, cv_fold=4)
-    model.train(X_train, y_train, cv_train=False, nrounds=100)
+    model.train(X_train, y_train, cv_train=True, nrounds=100)
     
     y_predict = model.predict(X_test)
     X_test.loc[:,'reordered'] = (y_predict > 0.202).astype(int)
