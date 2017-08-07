@@ -198,7 +198,8 @@ def main():
     # # model.cv_train(X_train, y_train, num_boost_round=2000, nfold=5, early_stopping_rounds=20)
 
     # #print(model.getScore())
-    DeepCV(df_train_gt, train, model, n_folds = 4, nrounds=300)
+    for i in [250, 350, 400, 450, 500]:    
+	DeepCV(df_train_gt, train, model, n_folds = 4, nrounds=i)
 
 
 if __name__ == '__main__':
