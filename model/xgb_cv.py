@@ -103,7 +103,7 @@ def compare_results(df_gt, df_preds):
     #print(np.mean(f1))
     return(np.mean(f1))
 
-def DeepCV(df_train_gt, train, model, n_folds = 4): 
+def DeepCV(df_train_gt, train, model, n_folds = 4, nrounds = 80): 
     train_scores = []
     val_scores = []
     num_boost_roundses = []
@@ -117,7 +117,7 @@ def DeepCV(df_train_gt, train, model, n_folds = 4):
 
         X_val = valid_subset.drop('reordered', axis=1)
         y_val = valid_subset.reordered
-        model.train(X_train, y_train, cv_train=False, nrounds=80)
+        model.train(X_train, y_train, cv_train=False, nrounds=nrounds)
 
         val_out = X_val[['user_id', 'product_id', 'order_id']]
 
@@ -150,7 +150,7 @@ def DeepCV(df_train_gt, train, model, n_folds = 4):
         print 'perform {} cross-validate: validate score = {}'.format(fold + 1, val_score)
         #train_scores.append(train_score)
         val_scores.append(val_score)
-
+    print('\n nrounds = {}'.format(nrounds))
     print '\n average validate score = {}'.format(
         sum(val_scores) / len(val_scores))
 
@@ -198,7 +198,7 @@ def main():
     # # model.cv_train(X_train, y_train, num_boost_round=2000, nfold=5, early_stopping_rounds=20)
 
     # #print(model.getScore())
-    DeepCV(df_train_gt, train, model, n_folds = 4)
+    DeepCV(df_train_gt, train, model, n_folds = 4, nrounds=200)
 
 
 if __name__ == '__main__':
