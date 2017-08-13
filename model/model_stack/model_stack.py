@@ -22,6 +22,7 @@ class TwoLevelModelStacking(object):
 
     def __init__(self, train, y_train, test,
                  models, stacking_model, 
+                 scorer,
                  stacking_with_pre_features=True, n_folds=5, random_seed=0):
         self.train = train
         self.y_train = y_train
@@ -36,6 +37,7 @@ class TwoLevelModelStacking(object):
         self.ntrain = train.shape[0]
         self.ntest = test.shape[0]
         self.kfold = KFold(n_splits=n_folds, shuffle=True, random_state=random_seed)
+        self.scorer = scorer
 
     def run_out_of_folds(self, clf):
         oof_train = np.zeros((self.ntrain,))
@@ -67,7 +69,7 @@ class TwoLevelModelStacking(object):
         # run level-1 out-of-folds
         for model in self.models:
             oof_train, oof_test = self.run_out_of_folds(model)
-            print("{}-1stCV: {}".format(model, r2_score(self.y_train, oof_train)))
+            print("{}-1stCV: {}".format(model, self.scorer(self.y_train, oof_train)))
             try:
                 x_train = np.concatenate((x_train, oof_train), axis=1)
                 x_test = np.concatenate((x_test, oof_test), axis=1)
@@ -76,9 +78,9 @@ class TwoLevelModelStacking(object):
                 x_test = oof_test
 
         # run level-2 stacking
-        best_nrounds, cv_mean, cv_std = self.stacking_model.cv_train(x_train, self.y_train)
-        self.stacking_model.nrounds = best_nrounds
-        print('Ensemble-CV: {0}+{1}'.format(cv_mean, cv_std))
+        # best_nrounds, cv_mean, cv_std = self.stacking_model.cv_train(x_train, self.y_train)
+        # self.stacking_model.nrounds = best_nrounds
+        # print('Ensemble-CV: {0}+{1}'.format(cv_mean, cv_std))
             
         self.stacking_model.train(x_train, self.y_train)
        
