@@ -2,8 +2,8 @@
 # _*_ coding: utf-8 _*_
 
 """
-@author: MarkLiu
-@time  : 17-6-24 下午1:32
+@author: Jing Guo
+@time  : 6/24/17
 """
 import os
 import sys
@@ -18,7 +18,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import KFold
 
 class TwoLevelModelStacking(object):
-    """两层的 model stacking"""
+    """two layer model stacking"""
 
     def __init__(self, train, y_train, test,
                  models, stacking_model, 
