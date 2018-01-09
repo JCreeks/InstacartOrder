@@ -2,8 +2,8 @@
 # _*_ coding: utf-8 _*_
 
 """
-@author: MarkLiu
-@time  : 17-6-24 下午1:30
+@author: Jing Guo
+@time  : 6/24/17
 """
 import os
 import sys
